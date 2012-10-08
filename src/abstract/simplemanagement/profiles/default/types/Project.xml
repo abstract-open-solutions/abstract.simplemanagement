@@ -57,4 +57,10 @@
          visible="True" i18n:attributes="title">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Dashboard" action_id="dashboard" category="object"
+         condition_expr=""
+         icon_expr="" link_target="" url_expr="string:${object_url}/@@dashboard"
+         visible="True" i18n:attributes="title">
+  <permission value="View"/>
+ </action>
 </object>

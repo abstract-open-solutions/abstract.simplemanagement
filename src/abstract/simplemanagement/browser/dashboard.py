@@ -5,7 +5,7 @@ from plone.memoize.instance import memoize
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-
+from ..interfaces import IProject
 
 class DashboardMixin(object):
     query_extra_params = {
@@ -62,16 +62,22 @@ class DashboardMixin(object):
         if self.portal_state().anonymous():
             return []
 
+        query_tickets = {'portal_type': 'PoiIssue',
+                         'getResponsibleManager': self.user.getId(),
+                         'review_state': ('new', 'open', 'in-progress', 
+                                          'resolved', 'unconfirmed')}
+        query_stories = {'portal_type': 'Story',
+                         'assigned_to': self.user.getId(),
+                         'review_state': ('todo', 'suspended', 'in_progress')}
+        
+        if IProject.providedBy(self.context):
+            context_path = '/'.join(self.context.getPhysicalPath())
+            query_tickets.update({'path': context_path})
+            query_stories.update({'path': context_path})
+
         return [
-            ({'portal_type': 'PoiIssue',
-              'getResponsibleManager': self.user.getId(),
-              'review_state': ('new', 'open', 'in-progress', 'resolved',
-                                'unconfirmed')},
-             'tickets'),
-            ({'portal_type': 'Story',
-              'assigned_to': self.user.getId(),
-              'review_state': ('todo', 'suspended', 'in_progress')},
-              'stories')
+            (query_tickets, 'tickets'),
+            (query_stories, 'stories')
         ]
 
 
