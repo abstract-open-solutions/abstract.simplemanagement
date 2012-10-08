@@ -171,7 +171,7 @@ class IStory(form.Schema):
 class IBooking(form.Schema):
 
     date = schema.Date(title=_(u"Date"))
-    time = schema.Int(title=_(u"Hours"))
+    time = schema.Float(title=_(u"Hours"))
     related = RelationChoice(
         title=_(u"Related activity"),
         source=ObjPathSourceBinder(),
