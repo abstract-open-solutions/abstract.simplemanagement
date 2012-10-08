@@ -55,11 +55,12 @@ def update_tracker_managers(obj, event):
         create_project_collaterals(obj, event)
     else:
         tracker = obj[TRACKER_ID]
-        tracker_managers = tracker.getManagers()
+        tracker_managers = list(tracker.getManagers())
         changed = False
         operatives = obj.operatives or []
         for operative in operatives:
             if operative.user_id not in tracker_managers:
+                # TODO: if user_id is not a real one, bad error to the user..
                 tracker_managers.append(operative.user_id)
                 changed = True
         if changed:
