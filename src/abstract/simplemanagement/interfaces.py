@@ -73,7 +73,8 @@ class IProject(form.Schema):
     )
     prj_start_date = schema.Date(title=_(u"Start date"))
     prj_expected_end_date = schema.Date(title=_(u"Expected end date"))
-    prj_end_date = schema.Date(title=_(u"End date"))
+    prj_end_date = schema.Date(title=_(u"End date"),
+                               required=False)
     is_external = schema.Bool(
         title=_(u'Is external?'),
         description=_(
@@ -91,12 +92,14 @@ class IProject(form.Schema):
 
     repositories = schema.List(
         title=_(u"Repositories"),
+        required=False,
         description=_(u"The HTTP URLs of the repositories "
                       u"(e.g. https://github.com/company/my.repository/)"),
         value_type=schema.URI()
     )
     environments = schema.List(
         title=_(u"URLs"),
+        required=False,
         description=_(u"The URLs of the various online environments "
                       u"(staging, production)"),
         value_type=schema.Object(title=_(u"Environment"),
@@ -104,6 +107,7 @@ class IProject(form.Schema):
     )
     milestones = schema.List(
         title=_(u"Milestones"),
+        required=False,
         description=_(u"Milestones are the different phases of the project. "
                       u"Each milestone should formally define "
                       u"a self-sufficient deliverable, "
@@ -113,6 +117,7 @@ class IProject(form.Schema):
     )
     operatives = schema.List(
         title=_(u"Operatives"),
+        required=False,
         description=_(
             u"The user IDs of those that have operative roles in this project "
             u"(coders, designers, project managers, accounts etc.). "
@@ -149,6 +154,7 @@ class IStory(form.Schema):
 
     assigned_to = schema.List(
         title=_(u"Assignees"),
+        required=False,
         description=_(u"The user IDs of the people "
                       u"that are responsible to act on this story"),
         value_type=schema.TextLine()
