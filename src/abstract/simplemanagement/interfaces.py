@@ -149,7 +149,12 @@ class IEpic(form.Schema):
 
 class IStory(form.Schema):
 
-    text = schema.Text(title=_(u"Text"))
+    text = schema.Text(
+        title=_(u"Notes"),
+        required=False
+    )
+    form.widget(text=WysiwygFieldWidget)
+    
     estimate = schema.Int(title=_(u"Estimate (man hours)"))
 
     assigned_to = schema.List(
