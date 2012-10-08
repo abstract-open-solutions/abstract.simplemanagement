@@ -58,6 +58,9 @@ def get_difference_class(a, b):
 def get_user_details(context, user_id):
     pm = getToolByName(context, 'portal_membership')
     usr = pm.getMemberById(user_id)
+    # XXX what if usr does not exists?
+    if not usr:
+        return 
     return {
         'fullname': usr.getProperty('fullname') or user_id,
         'href': '/author/%s' % user_id  # TODO: fix with the right url
@@ -66,8 +69,10 @@ def get_user_details(context, user_id):
 
 def get_assignees_details(story):
     assignees = getattr(story, 'assigned_to')
+    if assignees is None:
+        return
     for user_id in assignees:
-        yield get_user_details(story, user_id)
+            yield get_user_details(story, user_id)
 
 
 def get_epic_by_story(story):
