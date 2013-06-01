@@ -1,4 +1,4 @@
 Simple Management
 =================
 
-Fill this in!
+MOVED TO COLLECTIVE NS https://github.com/collective/collective.simplemanagement
